@@ -1,110 +1,117 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
-  Button,
   Typography,
   Paper,
-  ToggleButton,
-  ToggleButtonGroup,
   TextField,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from '@mui/material';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
-
-const translations = {
-  en: {
-    greeting: 'Welcome to Cooking School!',
-    description: 'Learn, cook, and enjoy delicious recipes with us.',
-    switch: 'Switch Language',
-  },
-  ar: {
-    greeting: 'مرحبًا بكم في مدرسة الطبخ!',
-    description: 'تعلم واطبخ واستمتع بأشهى الوصفات معنا.',
-    switch: 'تغيير اللغة',
-  },
-};
+import { useTranslation } from 'react-i18next';
 
 function MultiLangContent() {
-  const [lang, setLang] = useState<'en' | 'ar'>('en');
-
-  const handleLangChange = (_: any, newLang: 'en' | 'ar' | null) => {
-    if (newLang) setLang(newLang);
-  };
-
-  const isArabic = lang === 'ar';
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as 'en' | 'ar';
+  const isArabic = i18n.language === 'ar';
 
   return (
     <Box
       sx={{
-        minHeight: '40vh',
+        marginTop: '60px',
+        minHeight: '80vh',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#f3f4f6',
-        direction: isArabic ? 'rtl' : 'ltr',
+        direction: lang === 'ar' ? 'rtl' : 'ltr',
         pt: 6,
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{ p: 4, minWidth: 320, borderRadius: 3, textAlign: 'center' }}
-      >
-        <ToggleButtonGroup
-          value={lang}
-          exclusive
-          onChange={handleLangChange}
-          sx={{ mb: 2 }}
-        >
-          <ToggleButton value="en">
-            <GTranslateIcon sx={{ mr: 1 }} /> EN
-          </ToggleButton>
-          <ToggleButton value="ar">
-            <GTranslateIcon sx={{ mr: 1 }} /> AR
-          </ToggleButton>
-        </ToggleButtonGroup>
+      <Paper elevation={3} sx={{ p: 4, minWidth: 320, borderRadius: 3 }}>
         <Typography variant="h5" fontWeight={700} gutterBottom>
-          {translations[lang].greeting}
+          {t(
+            'multilang.greeting',
+            lang === 'en'
+              ? 'Welcome to Cooking School!'
+              : 'مرحبًا بكم في مدرسة الطبخ!',
+          )}
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
-          {translations[lang].description}
+          {t(
+            'multilang.description',
+            lang === 'en'
+              ? 'Learn, cook, and enjoy delicious recipes with us.'
+              : 'تعلم واطبخ واستمتع بأشهى الوصفات معنا.',
+          )}
         </Typography>
         <TextField
-          label={lang === 'en' ? 'Your message' : 'رسالتك'}
-          placeholder={lang === 'en' ? 'Type something...' : 'اكتب شيئًا...'}
+          label={t(
+            'multilang.messageLabel',
+            lang === 'en' ? 'Your message' : 'رسالتك',
+          )}
+          placeholder={t(
+            'multilang.messagePlaceholder',
+            lang === 'en' ? 'Type something...' : 'اكتب شيئًا...',
+          )}
           fullWidth
           sx={{ mb: 2 }}
         />
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel id="dropdown-label">
-            {lang === 'en' ? 'Select an option' : 'اختر خيارًا'}
+            {t(
+              'multilang.selectOption',
+              lang === 'en' ? 'Select an option' : 'اختر خيارًا',
+            )}
           </InputLabel>
           <Select
             labelId="dropdown-label"
             id="dropdown"
-            label={lang === 'en' ? 'Select an option' : 'اختر خيارًا'}
+            label={t(
+              'multilang.selectOption',
+              lang === 'en' ? 'Select an option' : 'اختر خيارًا',
+            )}
             defaultValue=""
             dir={isArabic ? 'rtl' : 'ltr'}
+            sx={
+              isArabic
+                ? {
+                    textAlign: 'right',
+                    '& .MuiSelect-icon': {
+                      left: 8,
+                      right: 'unset',
+                    },
+                  }
+                : {}
+            }
+            MenuProps={
+              isArabic
+                ? {
+                    PaperProps: {
+                      sx: { direction: 'rtl', textAlign: 'right' },
+                    },
+                  }
+                : {}
+            }
           >
             <MenuItem value="option1">
-              {lang === 'en' ? 'Option 1' : 'الخيار الأول'}
+              {t(
+                'multilang.option1',
+                lang === 'en' ? 'Option 1' : 'الخيار الأول',
+              )}
             </MenuItem>
             <MenuItem value="option2">
-              {lang === 'en' ? 'Option 2' : 'الخيار الثاني'}
+              {t(
+                'multilang.option2',
+                lang === 'en' ? 'Option 2' : 'الخيار الثاني',
+              )}
             </MenuItem>
             <MenuItem value="option3">
-              {lang === 'en' ? 'Option 3' : 'الخيار الثالث'}
+              {t(
+                'multilang.option3',
+                lang === 'en' ? 'Option 3' : 'الخيار الثالث',
+              )}
             </MenuItem>
           </Select>
         </FormControl>
-        <Button
-          variant="outlined"
-          onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-        >
-          {translations[lang].switch}
-        </Button>
       </Paper>
     </Box>
   );
