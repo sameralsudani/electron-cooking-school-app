@@ -8,6 +8,7 @@ import Register from './components/Register';
 import { AuthProvider } from './contexts/authContext';
 import Header from './components/Header';
 import Todo from './components/Todo';
+import MultiLangContent from './components/MultiLangContent';
 
 // MUI custom theme with persistent colors
 const theme = createTheme({
@@ -53,6 +54,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route path="/home" component={Home} />
             <Route path="/todo" component={Todo} />
+            <Route path="/multilingualContent" component={MultiLangContent} />
           </Switch>
         </HashRouter>
       </AuthProvider>
