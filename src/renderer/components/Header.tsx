@@ -122,6 +122,24 @@ function Header() {
               <Button
                 color="primary"
                 component={RouterLink}
+                to="/inventoryManagement"
+                variant="contained"
+                size="medium"
+                sx={{
+                  fontWeight: 700,
+                  borderRadius: 2,
+                  px: 2,
+                  boxShadow: '0 2px 8px 0 rgba(99,102,241,0.10)',
+                }}
+              >
+                {t(
+                  'header.multilingual',
+                  isArabic ? 'محتوى متعدد اللغات' : 'Inventory Management',
+                )}
+              </Button>
+              <Button
+                color="primary"
+                component={RouterLink}
                 to="/multilingualContent"
                 variant="contained"
                 size="medium"

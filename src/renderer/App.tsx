@@ -10,6 +10,7 @@ import { AuthProvider } from './contexts/authContext';
 import Header from './components/Header';
 import Todo from './components/Todo';
 import MultiLangContent from './components/MultiLangContent';
+import InventoryManagement from './components/InventoryManagement';
 import i18n from './i18n';
 
 // MUI custom theme with persistent colors
@@ -58,6 +59,10 @@ function App() {
               <Route path="/home" component={Home} />
               <Route path="/todo" component={Todo} />
               <Route path="/multilingualContent" component={MultiLangContent} />
+              <Route
+                path="/inventoryManagement"
+                component={InventoryManagement}
+              />
             </Switch>
           </HashRouter>
         </I18nextProvider>
