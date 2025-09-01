@@ -1,50 +1,63 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
+import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material';
 
-function Hello() {
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import { AuthProvider } from './contexts/authContext';
+import Header from './components/Header';
+import Todo from './components/Todo';
+
+// MUI custom theme with persistent colors
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#7c3aed', // Deep purple
+    },
+    secondary: {
+      main: '#f59e42', // Orange
+    },
+    background: {
+      default: '#f3f4f6',
+      paper: '#fff',
+    },
+    student: {
+      main: '#e0f7fa',
+    },
+    studentList: {
+      main: '#fce4ec',
+    },
+    class: {
+      main: '#fff9c4',
+    },
+    classList: {
+      main: '#e1bee7',
+    },
+    registration: {
+      main: '#ffe0b2',
+    },
+    register: {
+      main: '#c8e6c9',
+    },
+  },
+});
+function App() {
   return (
-    <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <HashRouter>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route path="/home" component={Home} />
+            <Route path="/todo" component={Todo} />
+          </Switch>
+        </HashRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
-}
+export default App;
