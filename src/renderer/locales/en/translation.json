@@ -1,0 +1,13 @@
+{
+  "posts": {
+    "title": "Vendor Names",
+    "columns": {
+      "itemcode": "Item Code",
+      "name1": "Name 1",
+      "price": "Price",
+      "vendorname": "Vendor Name",
+      "date": "Date"
+    },
+    "noData": "No data available"
+  }
+}

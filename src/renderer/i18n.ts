@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+// Configure Backend to load from locales/{lng}/translation.json
 i18n
   .use(Backend)
   .use(LanguageDetector)
@@ -11,7 +12,10 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
-
+    supportedLngs: ['en', 'ar'],
+    backend: {
+      loadPath: 'locales/{{lng}}/translation.json',
+    },
     interpolation: {
       escapeValue: false,
     },

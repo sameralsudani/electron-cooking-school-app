@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
-import Form from './Form/Form';
-import Posts from './Posts/Posts';
+import { useTranslation } from 'react-i18next';
+import Posts from './Posts';
+import Form from './Form';
 
 function InventoryManagement() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as 'en' | 'ar';
+
   useEffect(() => {
     // getPosts();
   }, []);
 
+  const direction = i18n.language === 'ar' ? 'rtl' : 'ltr';
   return (
-    <>
+    <Box dir={direction}>
       <Typography
         variant="h4"
         sx={{
@@ -22,7 +27,12 @@ function InventoryManagement() {
           textShadow: '0 2px 8px rgba(63,81,181,0.10)',
         }}
       >
-        Inventory Management System
+        {t(
+          'inventoryManagement.title',
+          lang === 'en'
+            ? 'Inventory Management System'
+            : 'نظام إدارة المخزون للمباني النشطة',
+        )}
       </Typography>
       <Box
         component="main"
@@ -85,7 +95,7 @@ function InventoryManagement() {
           </Paper>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 
