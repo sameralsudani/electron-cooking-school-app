@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -11,6 +12,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
 function Form() {
+  const { i18n } = useTranslation();
+
   const [form, setForm] = useState({
     itemcode: '',
     name1: '',
@@ -28,6 +31,39 @@ function Form() {
     e.preventDefault();
   };
 
+  // Simple inline multilingual labels
+  const lang = i18n && i18n.language === 'ar' ? 'ar' : 'en';
+  const labels = {
+    title: {
+      en: 'Add Inventory Item',
+      ar: 'إضافة عنصر للمخزون',
+    },
+    itemcode: {
+      en: 'Item Code',
+      ar: 'رمز الصنف',
+    },
+    name1: {
+      en: 'Name 1',
+      ar: 'الاسم 1',
+    },
+    price: {
+      en: 'Price',
+      ar: 'السعر',
+    },
+    vendorname: {
+      en: 'Vendor Name',
+      ar: 'اسم البائع',
+    },
+    date: {
+      en: 'Date',
+      ar: 'التاريخ',
+    },
+    submit: {
+      en: 'Submit',
+      ar: 'إرسال',
+    },
+  };
+  const direction = lang === 'ar' ? 'rtl' : 'ltr';
   return (
     <Paper
       elevation={6}
@@ -39,9 +75,16 @@ function Form() {
     >
       <Typography
         variant="h5"
-        sx={{ mb: 3, fontWeight: 700, color: 'primary.main', letterSpacing: 1 }}
+        sx={{
+          mb: 3,
+          fontWeight: 700,
+          color: 'primary.main',
+          letterSpacing: 1,
+          width: '100%',
+          textAlign: direction === 'rtl' ? 'right' : 'left',
+        }}
       >
-        Add Inventory Item
+        {labels.title[lang]}
       </Typography>
       <Box
         component="form"
@@ -51,7 +94,7 @@ function Form() {
       >
         <Stack spacing={2.5}>
           <TextField
-            label="Item Code"
+            label={labels.itemcode[lang]}
             name="itemcode"
             value={form.itemcode}
             onChange={handleChange}
@@ -59,7 +102,7 @@ function Form() {
             fullWidth
           />
           <TextField
-            label="Name 1"
+            label={labels.name1[lang]}
             name="name1"
             value={form.name1}
             onChange={handleChange}
@@ -67,7 +110,7 @@ function Form() {
             fullWidth
           />
           <TextField
-            label="Price"
+            label={labels.price[lang]}
             name="price"
             value={form.price}
             onChange={handleChange}
@@ -76,7 +119,7 @@ function Form() {
             fullWidth
           />
           <TextField
-            label="Vendor Name"
+            label={labels.vendorname[lang]}
             name="vendorname"
             value={form.vendorname}
             onChange={handleChange}
@@ -85,7 +128,7 @@ function Form() {
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              label="Date"
+              label={labels.date[lang]}
               value={form.date ? dayjs(form.date) : null}
               onChange={(newValue) => {
                 setForm((prev) => ({
@@ -93,7 +136,6 @@ function Form() {
                   date: newValue ? newValue.format('YYYY-MM-DD') : '',
                 }));
               }}
-              slotProps={{ textField: { required: true, fullWidth: true } }}
             />
           </LocalizationProvider>
           <Button
@@ -111,7 +153,7 @@ function Form() {
               letterSpacing: 0.5,
             }}
           >
-            Submit
+            {labels.submit[lang]}
           </Button>
         </Stack>
       </Box>

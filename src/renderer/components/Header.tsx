@@ -132,10 +132,13 @@ function Header() {
                   boxShadow: '0 2px 8px 0 rgba(99,102,241,0.10)',
                 }}
               >
-                {t(
-                  'header.multilingual',
-                  isArabic ? 'محتوى متعدد اللغات' : 'Inventory Management',
-                )}
+                {isArabic
+                  ? {
+                      inventory: 'إدارة المخزون',
+                    }.inventory
+                  : {
+                      inventory: 'Inventory Management',
+                    }.inventory}
               </Button>
               <Button
                 color="primary"
